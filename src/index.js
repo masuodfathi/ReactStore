@@ -1,12 +1,15 @@
 const { indexOf, slice } = require("lodash");
 import { Map } from "immutable";
+import { produce } from "immer";
 
-let book = Map({title:'Harry Potter'});
+let book = {title:'Harry Potter'};
 
 function Publish(book){
-    return book.set("isPublished",true);
+    return produce(book,draftBook =>{
+        draftBook.isPublished = true;
+    })
 }
 
-book = Publish(book);
-console.log(book.toJS());
-console.log(book.get("title"));
+let updatedBook = Publish(book);
+console.log(book);
+console.log(updatedBook);
